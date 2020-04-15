@@ -75,17 +75,44 @@ void createCube(Context &ctx)
         -0.5f, -0.5f,  0.5f, // first triangle starts here
          0.5f, -0.5f,  0.5f,
          0.5f,  0.5f,  0.5f, // first triangle ends here
-
+        -0.5f, -0.5f,  0.5f,
+         0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f,  0.5f,
         // back face
-
+         0.5f, -0.5f,  -0.5f, 
+        -0.5f, -0.5f,  -0.5f,
+        -0.5f,  0.5f,  -0.5f,
+         0.5f, -0.5f,  -0.5f, 
+        -0.5f,  0.5f,  -0.5f,
+         0.5f,  0.5f,  -0.5f,
         // left face
-
+        -0.5f, -0.5f,  -0.5f, 
+        -0.5f, -0.5f,   0.5f,
+        -0.5f,  0.5f,   0.5f, 
+        -0.5f, -0.5f,  -0.5f,
+        -0.5f,  0.5f,   0.5f, 
+        -0.5f,  0.5f,  -0.5f,
         // right face
-
+         0.5f, -0.5f,   0.5f, 
+         0.5f, -0.5f,  -0.5f,
+         0.5f,  0.5f,  -0.5f, 
+         0.5f, -0.5f,   0.5f,
+         0.5f,  0.5f,  -0.5f, 
+         0.5f,  0.5f,   0.5f,
         // top face
-
+        -0.5f,  0.5f,   0.5f, 
+         0.5f,  0.5f,   0.5f,
+         0.5f,  0.5f,  -0.5f, 
+        -0.5f,  0.5f,   0.5f,
+         0.5f,  0.5f,  -0.5f, 
+        -0.5f,  0.5f,  -0.5f,
         // bottom face
-
+         0.5f, -0.5f,  -0.5f, 
+        -0.5f, -0.5f,  -0.5f,
+        -0.5f, -0.5f,   0.5f, 
+         0.5f, -0.5f,  -0.5f,
+        -0.5f, -0.5f,   0.5f, 
+         0.5f, -0.5f,   0.5f
     };
 
     // Generates and populates a vertex buffer object (VBO) for the
@@ -134,7 +161,7 @@ void drawCube(Context &ctx)
 
 
     glBindVertexArray(ctx.cubeVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(ctx.defaultVAO);
 
     glUseProgram(0);
