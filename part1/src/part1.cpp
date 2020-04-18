@@ -146,10 +146,27 @@ void drawCube(Context &ctx)
 
     double elapsed_time = glfwGetTime();
 
+    float scalar = (float)abs(sin(elapsed_time));
+    glm::mat4 scale_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(scalar, scalar, scalar));
+    //glm::mat4 scale_matrix = glm::mat4(1.0f);
+    glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), glm::radians((float)(elapsed_time*100)), glm::vec3(1.0, 0.0, 0.0));
+    glm::mat4 translation_martrix = glm::translate(glm::mat4(1.0f), glm::vec3(sin(elapsed_time), cos(elapsed_time), 0.0f));
+
+
+
     // Define the model, view, and projection matrices here
-    glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 view = glm::mat4(1.0f);
-    glm::mat4 projection = glm::mat4(1.0f);
+    //glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 model = translation_martrix * rotation_matrix * scale_matrix;
+    //glm::mat4 view = glm::mat4(1.0f);
+    glm::mat4 view = glm::lookAt(
+        glm::vec3(3,3,3), // Camera is at (3,3,3), in World Space
+        glm::vec3(0,0,0), // and looks at the origin
+        glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+    );
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float) ctx.width / (float)ctx.height, 0.1f, 100.0f);
+    //glm::mat4 projection = glm::mat4(1.0f);
+
+    glm::mat4 mvp = projection * view * model;
 
     // Concatenate the model, view, and projection matrices to a
     // ModelViewProjection (MVP) matrix and pass it as a uniform
@@ -159,6 +176,8 @@ void drawCube(Context &ctx)
     // glUniformMatrix4fv(glGetUniformLocation(program, "u_mvp"),
     //                    1, GL_FALSE, &mvp[0][0]);
 
+
+    glUniformMatrix4fv(glGetUniformLocation(ctx.program, "u_mvp"),1, GL_FALSE, &mvp[0][0]);
 
     glBindVertexArray(ctx.cubeVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);

@@ -26,7 +26,7 @@ Environment variables
 The environment variable ASSIGNMENT2_ROOT must be set pointing to the
 extracted assignment2 directory. Example:
 
-  export ASSIGNMENT2_ROOT=$HOME/assignment2
+  export ASSIGNMENT2_ROOT=$HOME/cg_assignment2
 
 Building and running the program for Part 1
 -------------------------------------------
