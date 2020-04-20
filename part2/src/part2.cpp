@@ -159,7 +159,7 @@ void drawMesh(Context &ctx, GLuint program, const MeshVAO &meshVAO)
     glUseProgram(program);
 
     // Define the model, view, and projection matrices here
-    glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 model = trackballGetRotationMatrix(ctx.trackball);
     glm::mat4 view = glm::lookAt(
         glm::vec3(0,0,3), // Camera is at (3,3,3), in World Space
         glm::vec3(0,0,0), // and looks at the origin
@@ -175,6 +175,9 @@ void drawMesh(Context &ctx, GLuint program, const MeshVAO &meshVAO)
     glm::mat4 mvp = projection * view * model;
 
     glUniformMatrix4fv(glGetUniformLocation(ctx.program, "u_mvp"),1, GL_FALSE, &mvp[0][0]);
+
+    glm::mat4 mv = view * model;
+    glUniformMatrix4fv(glGetUniformLocation(ctx.program, "u_mv"),1, GL_FALSE, &mv[0][0]);
 
 
     glBindVertexArray(meshVAO.vao);
