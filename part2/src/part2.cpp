@@ -160,12 +160,21 @@ void drawMesh(Context &ctx, GLuint program, const MeshVAO &meshVAO)
 
     // Define the model, view, and projection matrices here
     glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 view = glm::mat4(1.0f);
-    glm::mat4 projection = glm::mat4(1.0f);
+    glm::mat4 view = glm::lookAt(
+        glm::vec3(0,0,3), // Camera is at (3,3,3), in World Space
+        glm::vec3(0,0,0), // and looks at the origin
+        glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+    );
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float) ctx.width / (float)ctx.height, 0.1f, 100.0f);
 
     // Concatenate the model, view, and projection matrices to a
     // ModelViewProjection (MVP) matrix and pass it as a uniform
     // variable to the shader program
+    
+
+    glm::mat4 mvp = projection * view * model;
+
+    glUniformMatrix4fv(glGetUniformLocation(ctx.program, "u_mvp"),1, GL_FALSE, &mvp[0][0]);
 
 
     glBindVertexArray(meshVAO.vao);
